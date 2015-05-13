@@ -2,7 +2,7 @@
 Autori: Presenti nel file (indica il nome del file)
 Tag: Motori, Arduino, Macchina, Ciclo di Sviluppo software
 Versione Stabile:1.0
-Licenza:GPL 3.0
+Licenza: GPL 3.0 o successive
 
 == Descrizione ==
 
@@ -19,7 +19,7 @@ La conversione dei valori in cm;
 Le funzioni rispettivamente per comandare i motori (durante la marcia e/o le sterzate, il servo-motore per 
 orientare il sensore di distanza;
 
-License: GPLv3 o successiva
+
 
 Requisiti:
 *	3 Ruote;
