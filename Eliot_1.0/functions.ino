@@ -88,24 +88,24 @@ long microsecondsToCentimeters(long microseconds)
  
  
     void marcia_avanti(int vel) {        //Funzione per far muovere la macchina verso avanti
-    motor1.run(FORWARD);                 //indica al motore1 di andare avanti
-    motor1.setSpeed(vel);                //indica al motore1 la velocità
-    motor2.run(FORWARD);                 //indica al motore2 di andare avanti
-    motor2.setSpeed(vel);                //indica al motore2 la velocità
+    motorS.run(FORWARD);                 //indica al motore1 di andare avanti
+    motorS.setSpeed(vel-70);                //indica al motore1 la velocità
+    motorD.run(FORWARD);                 //indica al motore2 di andare avanti
+    motorD.setSpeed(vel);                //indica al motore2 la velocità
     }
 
     void marcia_dietro() {               //Funzione per far muovere la macchhina verso dietro
-    motor1.run(BACKWARD);                //indica al motore1 di andare indietro
-    motor1.setSpeed(vel/2);              //indica al motore1 la velocità di retromarcia
-    motor2.run(BACKWARD);                //indica al motore2 di andare indietro
-    motor2.setSpeed(vel/2);              //indica al motor2 la velocità di retromarcia
-    delay (500);                         //indica il ritardo di 500 millisecondi
+    motorS.run(BACKWARD);                //indica al motore1 di andare indietro
+    motorS.setSpeed(vel);              //indica al motore1 la velocità di retromarcia
+    motorD.run(BACKWARD);                //indica al motore2 di andare indietro
+    motorD.setSpeed(vel);              //indica al motorD la velocità di retromarcia
+    delay (700);                         //indica il ritardo di 500 millisecondi
     frenata();                           //chiamata a funzione della frenata
     }
     
     void frenata() {                      //Funzione per far fermare la macchina
-      motor1.run(RELEASE);                //funzione per far frenare il motore1
-      motor2.run(RELEASE);                //funzione per far frenare il motore2
+      motorS.run(RELEASE);                //funzione per far frenare il motore1
+      motorD.run(RELEASE);                //funzione per far frenare il motore2
       delay (500);                        //indica il ritardo di 500 millisecondi
     }
    
@@ -131,10 +131,10 @@ long microsecondsToCentimeters(long microseconds)
  
   void gira_S()                                                 //Funzione per far girare la macchina a sinistra
  {
-   motor2.run(FORWARD);                                         //indica al motore2 di  girare a sinistra
-   motor2.setSpeed(vel);                                        //indica al motore2 la velocità
-   motor1.run(RELEASE);                                         //indica al motore1 di girare a sinistra
-   delay(500);                                                  //indica il ritardo di 500 millisecondi
+   motorD.run(FORWARD);                                         //indica al motore2 di  girare a sinistra
+   motorD.setSpeed(vel);                                        //indica al motore2 la velocità
+   motorS.run(RELEASE);                                         //indica al motore1 di girare a sinistra
+   delay(700);                                                  //indica il ritardo di 500 millisecondi
    frenata();                                                   //chiamta a funzione della frenata
    
    }
@@ -145,7 +145,7 @@ long microsecondsToCentimeters(long microseconds)
  int guarda_D ()
  {
    int locale=200;                                                //variabile locale distanza da paragonare
-   for(int i = pos_in + ang_fer; i<=pos_in; i = i - 10)          //ciclo di for per aggiungere alla variabile iteratore la posizione iniziale più l'angolo fermo 
+   for(int i = pos_in + ang_fer; i>=pos_in; i = i - 10)          //ciclo di for per aggiungere alla variabile iteratore la posizione iniziale più l'angolo fermo 
    {
      myservo.write(i);                                          //scrive sull monitor swìeriale la variabile iteratore
      locale=dist();                                             //variabile locale assegnata alla funzione dist()
@@ -162,10 +162,10 @@ long microsecondsToCentimeters(long microseconds)
  
   void gira_D()                                                  //Fuhnzione per far girare a destra la macchina
  {
-   motor1.run(FORWARD);                                          //indica al motore1 di girare a destra
-   motor1.setSpeed(vel);                                         //indica al motore1 la velocità
-   motor2.run(RELEASE);                                          //indica al motore2 di girare a destra
-   delay(500);                                                   //indica un ritardo di 500 millisecondi
+   motorS.run(FORWARD);                                          //indica al motore1 di girare a destra
+   motorS.setSpeed(vel);                                         //indica al motore1 la velocità
+   motorD.run(RELEASE);                                          //indica al motore2 di girare a destra
+   delay(700);                                                   //indica un ritardo di 500 millisecondi
    frenata();                                                    //chiamata a funzione della frenata()
    }
  

@@ -24,8 +24,8 @@ int ang_fer=75;                                   // Variabile che indica i grad
 int dist_min=30;                                  //Variabile che definisce la distanza minima dell'oggetto .
 boolean trovato;                                  //Variabile che trova l'oggetto .
 
-AF_DCMotor motor1(1);                             //Dichiarazione oggetto motore destro .
-AF_DCMotor motor2(2);                             //Dichiarazione oggetto motore sinistro .
+AF_DCMotor motorS(1);                             //Dichiarazione oggetto motore destro .
+AF_DCMotor motorD(4);                             //Dichiarazione oggetto motore sinistro .
    // Inizializzo la variabile per contenere il pin collegato al buzzer
  int buzzer = A0;
 
@@ -58,20 +58,18 @@ void loop() {
      ost_D=guarda_D();                             //Assegnazione di guardare l'ostacolo a sinistra .
      marcia_dietro();                              //Indica la marcia dietro (chiamata a funzione marcia dietro) . 
      marcia_avanti(vel);                           //Indica la marcia avanti (chiamata a funzione marcia avanti).
-     if (ost_S < ost_D)                            //Controllo per vedere se l'ostacolo a sinistra e più lontano dell'stacolo a destra .
+     if (ost_S > ost_D)                            //Controllo per vedere se l'ostacolo a sinistra e più lontano dell'stacolo a destra .
      {
        gira_D();                                   //Assegna di girare a destra .
      }
      else                                         
     {
-     gira_S();                                     //Assegna di girare a sinistra .
+      gira_S();                                     //Assegna di girare a sinistra .
     }  
     trovato=false;                                 //Indica che l'oggetto non e stato trovato
  }
- }
  
-   
-            
-
+ marcia_avanti(vel);
+ }
     
 
