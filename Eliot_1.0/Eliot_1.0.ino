@@ -1,5 +1,5 @@
 //##############################################################################################################################################
-//##   Cordinatori : Mellone Dario - Papaccio Raffaele (gruppo 3)                                                                             ##
+//##   Coordinatori : Mellone Dario - Papaccio Raffaele (gruppo 3)                                                                             ##
 //##   Autori : Paolella Antonio - Cacciapuoti Pasquale (gruppo 4), Conte Angelo - Papaccio Noè Ugo (gruppo6), Esposito Gaetano - Grieco Davide                                                                                                                     
 //##   (gruppo 8),Piccirillo Alessio - Salvatore Oro (gruppo2), Di Martino Andrea - Cannizzaro Luigi (gruppo5), Gigante Gennaro - Orlando Pasquale-                                                                                                                                       ##
 //##    Toscanese Andrea (gruppo1), Casella Maria - Scamardella Assunta (gruppo 10), Amato Roberto - Docimo Francesco (gruppo9), Pisano Giovanni                                                                                                                                      ##
@@ -8,8 +8,8 @@
 //##############################################################################################################################################                                                                                                                     ##
 
 
-#include <AFMotor.h>
-#include <Servo.h>
+#include <AFMotor.h>                              // Include la libreria del motore .
+#include <Servo.h>                               // Include la libreria del servo motore .
 
 Servo myservo;                                    // Crea la classe servo per controllare l oggetto .
 int triggerPort=A3;                               // Sensore che invia il segnale .
