@@ -7,7 +7,7 @@ Licenza: GPL 3.0 o successive
 == Descrizione ==
 
 Il progetto è stato svolto a scopi didattici all'interno del programma didattico di Tecnologie e 
-Progettazione di sistemi informatici e di telecomunicazione svolto dalla 4 A ITI dell'Istituto Pitagora di Pozzuoli.  
+Progettazione di sistemi informatici e di telecomunicazione svolto dalla 4 A ITI dell'Istituto Pitagora di Pozzuoli, Anno scolastico 2014/2015.  
 Docenti:
 Mazzone Diomede;
 Orecchio Alessandro.
