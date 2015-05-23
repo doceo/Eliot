@@ -19,7 +19,7 @@
   Serial.println(duration);
   Serial.print(" distanza: ");
 
-  if (duration >38000)     { 
+  if (duration >38000) { 
           Serial.println("fuori portata");                                 //segnaliamo se la distanza è fuori dalla portata dello strumento
   
   }else { 
@@ -153,7 +153,7 @@ long microsecondsToCentimeters(long microseconds)
  int guarda_D ()
  {
    int locale=200;                                                // La variabile da paraganore al valore presente in "dist()" .
-   for(int i = pos_in + ang_fer; i>=pos_in; i = i - 10)          // Ciclo di for per sommare la posizione iniziale all'angolo fermo .
+   for(int i = pos_in + ang_fer; i>=pos_in; i = i - 10){          // Ciclo di for per sommare la posizione iniziale all'angolo fermo .
      myservo.write(i);                                          //Il servo-motore viene settato all'angolazione definita dal ciclo .
      locale=dist();                                             
      if (locale<dist())                                        // Controllo se la variabile locale è minore della distanza .
