@@ -1,5 +1,5 @@
 === Eliot ===
-Autori: Presenti nel file (indica il nome del file)
+Autori: Presenti nel file Eliot_10.0/Eliot_1.0.ino
 Tag: Motori, Arduino, Macchina, Ciclo di Sviluppo software
 Versione Stabile:1.0
 Licenza: GPL 3.0 o successive
