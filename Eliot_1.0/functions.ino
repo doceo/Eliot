@@ -5,7 +5,7 @@
   int dist(){
 
   int distMax = 30;  
-  int trovato = false;                                                     // imposta la variabile che restiuisce a false
+  int trovato = false;                                                     // imposta la variabile che restituisce a false
     
   digitalWrite (triggerPort, HIGH);                                        // attraverso il trigger inizia a emettere onde
   delayMicroseconds(10);                                                   // per dieci secondi
@@ -49,7 +49,7 @@ long microsecondsToCentimeters(long microseconds)
   {
     
     analogWrite(buzzer, 300);                                      //indica al pin buzzer un valore analogico pari a 300 .
-    delay(100);                                                    //ritarda il suono di 100 millisecondi .
+    delay(100);                                                    //il tempo necessario a far suonare il beep
      analogWrite(buzzer, 0);                                       //azzera l'output riferita al pin buzzer . 
     
   }
@@ -59,115 +59,122 @@ long microsecondsToCentimeters(long microseconds)
 
  bool RicOst()    
  {  
-   for (int i = pos_in - ang_mov ; i <= pos_in + ang_mov; i = i + 15) // ciclo di for per la rotazione del servo . 
+   for (int i = pos_in - ang_mov ; i <= pos_in + ang_mov; i = i + 15) // ciclo di for per la rotazione del servo-motore, sommandolo . 
    {
-     myservo.write (i);   // comanda al servo di angolarsi in base alla misura stabilita nel ciclo di for .
-     delay (50);          // ritarda la rotazione di 10 millisecondi .
-       if ( dist()< dist_min )      // scelta per emissione del suono alla rilevazione dell'ostacolo .
+     myservo.write (i);   // Il servo-motore viene settato all'angolazione definita dal ciclo .
+     delay (50);          // Il tempo necessario per ricercare l'ostacolo .
+       if ( dist()< dist_min )      // Confronto tra la distanza ottenuta e la distanza minima .
         {
           trovato=true;
           beep();         // Funzione di avvertimento tramite un beep .
-          frenata();
+          frenata();      // Chiamata a funzione "frenata()"
         }
     }
-    if (trovato==false)         //controllo per trovare l'oggetto
+    if (trovato==false)         //Scelta in caso non si trovi l'oggetto .
     {
-      for (int i = pos_in + ang_mov ; i >= pos_in - ang_mov; i = i - 15) //ciclo di for per indicare la posizione iniziale aggiungendo e sottraendo l'angolo in movimento
+      for (int i = pos_in + ang_mov ; i >= pos_in - ang_mov; i = i - 15) // ciclo di for per la rotazione del servo-motore, sottraendolo . 
       {
-         myservo.write (i);  //scrive sul monitor seriale la variabile iteratore
-         delay (50);         // crea un ritardo di 50 millisecondi
-         if ( dist()< dist_min )   //controllo per vedere la funzione dist è maggiore dell'angolo minimo
+         myservo.write (i);  
+         delay (50);         
+         if ( dist()< dist_min )   
          {
-           trovato=true;           //assegnazione per trovare l'angolo
-           beep();                 //chiamata a funzione di beep()
-           frenata();              //chiamata a funzione di ferenata()
+           trovato=true;           
+           beep();                 
+           frenata();              
          }
       }
     }
 }
  
- 
-    void marcia_avanti(int vel) {        //Funzione per far muovere la macchina verso avanti
-    motorS.run(FORWARD);                 //indica al motore1 di andare avanti
-    motorS.setSpeed(vel-70);                //indica al motore1 la velocità
-    motorD.run(FORWARD);                 //indica al motore2 di andare avanti
-    motorD.setSpeed(vel);                //indica al motore2 la velocità
+    // Funzione che permette la marcia in senso orario .
+     
+    void marcia_avanti(int vel) {        
+    motorS.run(FORWARD);                 // Indica al motoreS di partire in senso orario .
+    motorS.setSpeed(vel-70);             // Setta la velocità del motore di sinistra .
+    motorD.run(FORWARD);                 // Indica al motoreD di partire in senso orario 
+    motorD.setSpeed(vel);                // Setta la velocità del motore di destra .
     }
 
-    void marcia_dietro() {               //Funzione per far muovere la macchhina verso dietro
-    motorS.run(BACKWARD);                //indica al motore1 di andare indietro
-    motorS.setSpeed(vel);              //indica al motore1 la velocità di retromarcia
-    motorD.run(BACKWARD);                //indica al motore2 di andare indietro
-    motorD.setSpeed(vel);              //indica al motorD la velocità di retromarcia
-    delay (700);                         //indica il ritardo di 500 millisecondi
-    frenata();                           //chiamata a funzione della frenata
+    //Funzione per far muovere la macchina in senso antiorario .
+    
+    void marcia_dietro() {               
+    motorS.run(BACKWARD);                // Indica al motoreS di partire in senso orario .
+    motorS.setSpeed(vel);              // Setta la velocità del motore di sinistra .
+    motorD.run(BACKWARD);                // Indica al motoreD di partire in senso orario .
+    motorD.setSpeed(vel);              // Setta la velocità del motore di destra .
+    delay (700);                         // Il tempo necessario per far fare la marcia indietro .
+    frenata();                           // Chiamata a funzione "frenata()" .
     }
     
-    void frenata() {                      //Funzione per far fermare la macchina
-      motorS.run(RELEASE);                //funzione per far frenare il motore1
-      motorD.run(RELEASE);                //funzione per far frenare il motore2
-      delay (500);                        //indica il ritardo di 500 millisecondi
+    
+    //Funzione per far fermare la macchina per mezzo secondo .
+    
+    void frenata() {                      
+      motorS.run(RELEASE);                // Metodo per far frenare il motoreS .
+      motorD.run(RELEASE);                // Metodo per far frenare il motoreD .
+      delay (500);                        // Il tempo necessario per far frenare la macchina .
     }
    
     
+ //Funzione per guardare a sinistra quando la macchina è ferma .
  
  int guarda_S ()
  {
-   int locale=200;                                                //variabile locale distanza da paragonare
-   for(int i = pos_in - ang_fer; i<=pos_in; i = i + 10)           //ciclo di for per paragonare la posizione iniziale sottraendo l'angolo fermo
+   int locale=200;                                                // La variabile da paraganore al valore presente in "dist()" .
+   for(int i = pos_in - ang_fer; i<=pos_in; i = i + 10)           // Ciclo di for per sottrarre la posizione iniziale all'angolo fermo .
    {
-     myservo.write(i);                                           //scrivere sul monitor seriale la variabile iteratore
-     locale=dist();                                              //assegnare la variabile locale alla funzione dist()
-     if (locale<dist())                                          //condizione per determinare se la variabile locale è minore della funzione dist()
+     myservo.write(i);                                           // Il servo-motore viene settato all'angolazione definita dal ciclo .
+     locale=dist();                                             
+     if (locale<dist())                                          // Condizione per determinare se il valore della variabile "locale" è minore di quella presente nella funzione "dist()" .
      {
-       locale=dist();                                            //assegna la variabile locale alla funzione dist()
+       locale=dist();                                          
      }
-     delay(500);                                                //ritardo di 500 millisecondi
-     return locale;                                             //restituisce la variabile locale
+     delay(500);                                                // Il tempo necessario per guardare a sinistra .
+     return locale;                                             //restituisce la variabile "locale" .
    }
  }
  
  
+ //Funzione per far girare la macchina a sinistra .
  
-  void gira_S()                                                 //Funzione per far girare la macchina a sinistra
+  void gira_S()                                                
  {
-   motorD.run(FORWARD);                                         //indica al motore2 di  girare a sinistra
-   motorD.setSpeed(vel);                                        //indica al motore2 la velocità
-   motorS.run(RELEASE);                                         //indica al motore1 di girare a sinistra
-   delay(700);                                                  //indica il ritardo di 500 millisecondi
-   frenata();                                                   //chiamta a funzione della frenata
+   motorD.run(FORWARD);                                         //Indica al motoreD di  girare a sinistra .
+   motorD.setSpeed(vel);                                        //Indica al motoreD la velocità .
+   motorS.run(RELEASE);                                         //Indica al motoreS di fermersi.
+   delay(700);                                                  //Il tempo necessario per girare a sinistra
+   frenata();                                                   //Chiamata a funzione della frenata
    
    }
    
    
- 
+ //Funzione per guardare a destra quando la macchina è ferma 
  
  int guarda_D ()
  {
-   int locale=200;                                                //variabile locale distanza da paragonare
-   for(int i = pos_in + ang_fer; i>=pos_in; i = i - 10)          //ciclo di for per aggiungere alla variabile iteratore la posizione iniziale più l'angolo fermo 
-   {
-     myservo.write(i);                                          //scrive sull monitor swìeriale la variabile iteratore
-     locale=dist();                                             //variabile locale assegnata alla funzione dist()
-     if (locale<dist())                                        //controllo se la variabile locale è minore della distanza
+   int locale=200;                                                // La variabile da paraganore al valore presente in "dist()" .
+   for(int i = pos_in + ang_fer; i>=pos_in; i = i - 10)          // Ciclo di for per sommare la posizione iniziale all'angolo fermo .
+     myservo.write(i);                                          //Il servo-motore viene settato all'angolazione definita dal ciclo .
+     locale=dist();                                             
+     if (locale<dist())                                        // Controllo se la variabile locale è minore della distanza .
      {
-       locale=dist();                                         //assegnata la variabile locale alla funzione dist()
+       locale=dist();                                       
      }
-     delay(500);                                             //ritardo di 500 millisecondi 
-     return locale;                                         //restituisce la variabile locale
+     delay(500);                                             // Il tempo necessario per guardare a destra .
+     return locale;                                         // Restituisce la variabile locale .
    }
  }
  
+ //Funzione per far girare a destra la macchina
  
- 
-  void gira_D()                                                  //Fuhnzione per far girare a destra la macchina
+  void gira_D()                                                  
  {
-   motorS.run(FORWARD);                                          //indica al motore1 di girare a destra
-   motorS.setSpeed(vel);                                         //indica al motore1 la velocità
-   motorD.run(RELEASE);                                          //indica al motore2 di girare a destra
-   delay(700);                                                   //indica un ritardo di 500 millisecondi
-   frenata();                                                    //chiamata a funzione della frenata()
+   motorS.run(FORWARD);                                          //Indica al motoreS di girare a destra .
+   motorS.setSpeed(vel);                                         //indica al motoreS la velocità .
+   motorD.run(RELEASE);                                          //Indica al motoreD di fermarsi .
+   delay(700);                                                   //il tempo necessario per girare a destra .
+   frenata();                                                    //chiamata a funzione della frenata() .
    }
- 
- 
+   
+   
 

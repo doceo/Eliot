@@ -1,50 +1,50 @@
-//##############################################################################################################################################
-//##   Coordinatori : Mellone Dario - Papaccio Raffaele (gruppo 3)                                                                             ##
-//##   Autori : Paolella Antonio - Cacciapuoti Pasquale (gruppo 4), Conte Angelo - Papaccio Noè Ugo (gruppo6), Esposito Gaetano - Grieco Davide                                                                                                                     
-//##   (gruppo 8),Piccirillo Alessio - Salvatore Oro (gruppo2), Di Martino Andrea - Cannizzaro Luigi (gruppo5), Gigante Gennaro - Orlando Pasquale-                                                                                                                                       ##
-//##    Toscanese Andrea (gruppo1), Casella Maria - Scamardella Assunta (gruppo 10), Amato Roberto - Docimo Francesco (gruppo9), Pisano Giovanni                                                                                                                                      ##
-//##    (gruppo 7)                                                                                                                                      ##
-//##    Prof. Diomede Mazzone, Alessandro Orecchio
-//##############################################################################################################################################                                                                                                                     ##
+//####################################################################################################################################################
+//##   Maintainers : Mellone Dario - Papaccio Raffaele (gruppo 3)                                                                                   ##
+//##   Autori : Paolella Antonio - Cacciapuoti Pasquale (gruppo 4), Conte Angelo - Papaccio Noè Ugo (gruppo6), Esposito Gaetano - Grieco Davide     ##                                                                                                                
+//##   (gruppo 8),Piccirillo Alessio - Salvatore Oro (gruppo2), Di Martino Andrea - Cannizzaro Luigi (gruppo5), Gigante Gennaro - Orlando Pasquale- ##                                                                                                                                      ##
+//##   Toscanese Andrea (gruppo1), Casella Maria - Scamardella Assunta (gruppo 10), Amato Roberto - Docimo Francesco (gruppo9), Pisano Giovanni     ##                                                                                                                                  ##
+//##   (gruppo 7)                                                                                                                                   ##
+//##   Cordinatori:Prof Diomede Mazzone , Prof Alessandro Orecchio                                                                                  ##
+//####################################################################################################################################################                                                                                                                     ##
 
 
 #include <AFMotor.h>                              // Include la libreria del motore .
-#include <Servo.h>                               // Include la libreria del servo motore .
+#include <Servo.h>                                // Include la libreria del servo motore .
 
-Servo myservo;                                    // Crea la classe servo per controllare l oggetto .
-int triggerPort=A3;                               // Sensore che invia il segnale .
-int echoPort = A5;                                // Sensore che riceve il segnale inviato dal trigger .
-int cmconv = 59;                                  // Calcolo distanza dell'onda . 
+Servo myservo;                                    // Crea l'oggetto myservo .
+int triggerPort=A3;                               // Il trigger viene collegato alla porta A3 .
+int echoPort = A5;                                // il sensore echo viene collegato alla porta A5 .
+int cmconv = 59;                                  // Variabile di conversione . 
 int pos_in = 90;                                  // Variabile che definisce la posizione iniziale a 90° del servo-motore . 
 int ang_mov=30;                                   // Variabile che definisce l'angolazione del servo in movimento . 
-int vel=200;                                      // Variabile che definisce la velocità .
-int ost_S;                                        // Variabile che trova l'ostacolo a sinistra .
-int ost_D;                                        // Variabile che trova l'ostacolo a destra .
-int ang_fer=75;                                   // Variabile che indica i gradi dell'angolo fermo .
+int vel=200;                                      // Variabile che definisce la velocità .                                         
+int ost_D;                                        // Variabile che conserva la distanza dell'ostacolo a destra .
+int ost_S;                                        // Variabile che conserva la distanza dell'ostacolo a sinistra .
+int ang_fer=75;                                   // Variabile che indica l'angolazione dell'oggetto quando è fermo .
 int dist_min=30;                                  //Variabile che definisce la distanza minima dell'oggetto .
-boolean trovato;                                  //Variabile che trova l'oggetto .
+boolean trovato;                                  //Variabile che conserva l'ostacolo trovato .
 
-AF_DCMotor motorS(1);                             //Dichiarazione oggetto motore destro .
-AF_DCMotor motorD(4);                             //Dichiarazione oggetto motore sinistro .
-   // Inizializzo la variabile per contenere il pin collegato al buzzer
- int buzzer = A0;
+AF_DCMotor motorS(1);                            // Motore sinistro collegato al pin 1 . 
+AF_DCMotor motorD(4);                            // Motore destro collegato al pin 4 .
+ 
+ int buzzer = A0;                                 // Il buzzer viene collegato alla porta A0 . 
 
 void setup() {
-    myservo.write(pos_in);                        // Il servo ruota nella posizione iniziale .
-    pinMode(triggerPort, OUTPUT);                 // Il trigger viene inserito ad una porta input . 
-    pinMode(echoPort, INPUT);                     // L'echo viene inserito ad una porta input . 
-    digitalWrite(triggerPort, LOW);               // Porta a 0 l'input del trigger . 
-    myservo.attach(9);                            // Attaccare il servo nel pin 9 per l' oggetto.
+    myservo.write(pos_in);                        // Il servo-motore viene settato alla posizione iniziale .
+    pinMode(triggerPort, OUTPUT);                 // Il sensore trigger viene collegato in una porta di tipo output  . 
+    pinMode(echoPort, INPUT);                     // Il sensore echo viene collegato in una porta di tipo input . 
+    digitalWrite(triggerPort, LOW);               // Porta a 0 l'input del trigger .* 
+    myservo.attach(9);                            // Il servo-motore viene assegnato al pin 9.
                                                   
       
     
     
     // Inizializzo il pin come OUTPUT e imposto il segnale a LOW
     
-    pinMode(buzzer, OUTPUT);                      // Inserisce il buzzer ad un pin di output . 
-    analogWrite(buzzer, 0);                       // Annullamento suono del buzzer . 
-    digitalWrite(triggerPort, LOW);               // Porta a 0 l'output del trigger . 
-    marcia_avanti(vel);
+    pinMode(buzzer, OUTPUT);                      // Il buzzer è collegato ad un pin di output . 
+    analogWrite(buzzer, 0);                       // Il buzzer viene settato a 0 . 
+    digitalWrite(triggerPort, LOW);               // Porta a 0 l'output del trigger* . 
+    marcia_avanti(vel);                           // Chiamata a funzione "marcia_avanti" .
 
    
 }
@@ -52,24 +52,29 @@ void setup() {
 void loop() {                                     
   
   RicOst ();                                       //Chiamata a funzione ricerca ostacoli .  
-  if(trovato==true)                                //Controllo per trovare l'angolo                                 
+  if(trovato==true)                                                                
    {
-     ost_S=guarda_S();                             //Assegnazione di guardare l'ostacolo a sinistra .
-     ost_D=guarda_D();                             //Assegnazione di guardare l'ostacolo a sinistra .
-     marcia_dietro();                              //Indica la marcia dietro (chiamata a funzione marcia dietro) . 
-     marcia_avanti(vel);                           //Indica la marcia avanti (chiamata a funzione marcia avanti).
-     if (ost_S > ost_D)                            //Controllo per vedere se l'ostacolo a sinistra e più lontano dell'stacolo a destra .
+     ost_S=guarda_S();                             //Funzione guarda l'ostacolo a sinistra .
+     ost_D=guarda_D();                             //Funzione guarda l'ostacolo a destra .
+     marcia_dietro();                              //Indica la marcia dietro (chiamata a funzione marcia in dietro) . 
+     marcia_avanti(vel);                           //Indica la marcia avanti (chiamata a funzione marcia in avanti).
+     if (ost_S < ost_D)                            //Confronto tra l'ostacolo a sinistra e a destra .
      {
-       gira_D();                                   //Assegna di girare a destra .
+       gira_D();                                   //Funzione che sceglie di girare a destra se l'ostacolo è a sinistra .
      }
-     else                                         
+     else                                         // Altrimenti
     {
-      gira_S();                                     //Assegna di girare a sinistra .
+     gira_S();                                     //Funzione che sceglie di girare a sinistra se l'ostacolo è a destra  .
     }  
-    trovato=false;                                 //Indica che l'oggetto non e stato trovato
+    trovato=false;                                 //Indica che l'oggetto non e stato trovato .
  }
  
- marcia_avanti(vel);
+ marcia_avanti(vel);                               
  }
+ 
+ 
+   
+            
+
     
 
