@@ -90,7 +90,7 @@ long microsecondsToCentimeters(long microseconds)
      
     void marcia_avanti(int vel) {        
     motorS.run(FORWARD);                 // Indica al motoreS di partire in senso orario .
-    motorS.setSpeed(vel-70);             // Setta la velocità del motore di sinistra .
+    motorS.setSpeed(vel-70);             // Setta la velocità del motore di sinistra tenendo conto del disallienamento delle ruote .
     motorD.run(FORWARD);                 // Indica al motoreD di partire in senso orario 
     motorD.setSpeed(vel);                // Setta la velocità del motore di destra .
     }

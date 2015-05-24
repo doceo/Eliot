@@ -21,7 +21,7 @@ int vel=200;                                      // Variabile che definisce la 
 int ost_D;                                        // Variabile che conserva la distanza dell'ostacolo a destra .
 int ost_S;                                        // Variabile che conserva la distanza dell'ostacolo a sinistra .
 int ang_fer=75;                                   // Variabile che indica l'angolazione dell'oggetto quando è fermo .
-int dist_min=30;                                  //Variabile che definisce la distanza minima dell'oggetto .
+int dist_min=25;                                  //Variabile che definisce la distanza minima dell'oggetto .
 boolean trovato;                                  //Variabile che conserva l'ostacolo trovato .
 
 AF_DCMotor motorS(1);                            // Motore sinistro collegato al pin 1 . 
@@ -36,8 +36,7 @@ void setup() {
     digitalWrite(triggerPort, LOW);               // Porta a 0 l'input del trigger .* 
     myservo.attach(9);                            // Il servo-motore viene assegnato al pin 9.
                                                   
-      
-    
+    Serial.begin(9600);
     
     // Inizializzo il pin come OUTPUT e imposto il segnale a LOW
     
@@ -66,7 +65,7 @@ void loop() {
     {
      gira_S();                                     //Funzione che sceglie di girare a sinistra se l'ostacolo è a destra  .
     }  
-    trovato=false;                                 //Indica che l'oggetto non e stato trovato .
+    trovato=false;                                 //Ripristina la variavile a False .
  }
  
  marcia_avanti(vel);                               
